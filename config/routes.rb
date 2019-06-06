@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   # Site routes
   get 'home', to: 'site#home'
   get 'start', to: 'site#start'
+
+  # Charges routes
+  resources :charges
+
+  # Payments routes
+  resources :payments
   
   # Devise routes
   devise_for :users , controllers: {

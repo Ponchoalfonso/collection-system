@@ -33,6 +33,17 @@ class User < ApplicationRecord
   def will_save_change_to_email?
   end
 
+  def payments
+    payments = []
+    self.charges.each do  |charge|
+      charge.payments.each do |payment|
+        payments.push(payment)
+      end
+    end
+
+    return payments
+  end
+
   private
     def set_default_role
       self.role ||= Role.find_by_name('customer')

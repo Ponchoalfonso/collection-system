@@ -3,7 +3,7 @@ class CreateCharges < ActiveRecord::Migration[5.2]
     create_table :charges do |t|
       t.decimal :amount
       t.text :description
-      t.references :user
+      t.boolean :payed
 
       t.timestamps
     end

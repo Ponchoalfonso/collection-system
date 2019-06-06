@@ -2,13 +2,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :action_permitted?
 
-  protected
-    def configure_permitted_parameters
-      added_attrs = [:name, :last_name, :second_last_name, :phone_number, :password, :password_confirmation]
-      devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
-      devise_parameter_sanitizer.permit :account_update, keys: added_attrs
-    end
-
   private
     def permissions
       permissions = {
@@ -31,4 +24,14 @@ class ApplicationController < ActionController::Base
         redirect_to permission[:redirect_url]
       end
     end
+
+    def configure_permitted_parameters
+      added_attrs = [:name, :last_name, :second_last_name, :phone_number, :password, :password_confirmation]
+      devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
+      devise_parameter_sanitizer.permit :account_update, keys: added_attrs
+    end
+
+    def only_respond_to_json
+      head :not_acceptable unless params[:format] == 'json'
+     end
 end
