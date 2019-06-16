@@ -2,9 +2,11 @@
   <div class="sub-content">
     <h3>Cargos</h3>
     <button id="get-users-charge" type="button" class="btn btn-other" data-toggle="modal" data-target="#new-charge">Nuevo</button>
-    <button id="name-target-1" class="btn btn-other dropdown-toggle" type="button">Filtrar usuario</button>
-    <input type="date" class="btn btn-other">
-    <button id="reset-target-1" class="btn btn-other">Reset</button>
+    <button id="user-target" type="button" class="btn btn-other dropdown-toggle" data-toggle="modal" data-target="#filter-users">
+      <span id="">Filtrar usuario</span>
+    </button>
+    <input type="date" class="btn btn-other" id="date-filter">
+    <button id="reset-target" class="btn btn-other">Reset</button>
   </div>
   <div class="table-wrapper">
     <table class="table table-hover">
@@ -18,13 +20,13 @@
         </tr>
       </thead>
       <tbody id="charges-table">
-      <% charges.each do |charge| %>
+      <% charges.order('created_at DESC').each do |charge| %>
         <tr class="charge-row" id="charge-<%=charge.id%>">
           <th><%= charge.id %></th>
           <td><%= "#{charge.user.name} #{charge.user.last_name}" %></td>
           <td><%= charge.description %></td>
           <td><%= number_to_currency charge.amount %></td>
-          <td><%= charge.created_at.strftime('%FT%T') %></td>
+          <td><%= charge.created_at.localtime.strftime("%Y-%m-%d %k:%M") %></td>
         </tr>
       <% end %>
       </tbody>

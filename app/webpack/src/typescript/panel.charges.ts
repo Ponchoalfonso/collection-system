@@ -43,16 +43,18 @@ const chargeHandler = (form) => {
               [data],
               'charge'
             );
+            chargeDetail(data.id);
           }
         });
       }
+
       createAlert('success', 'Cargos generados correctamente.');
       closeModals();
     });
   }
 }
 
-const chargeDetail = (id) => {
+export const chargeDetail = (id) => {
   const row = document.querySelector(`#charge-${id}`);
   if (row) {
     row.addEventListener('click', () => {
@@ -92,33 +94,6 @@ const chargeForm = {
   ],
 }
 
-/* * * * * * * * * * * * * * * * *
- * Updating charges when needed  *
-* * * * * * * * * * * * * * * * */
-// charges seekers paragraph
-const cs = [
-  {
-    searchclk: true,
-    name: 'charge',
-    listener: 'charge-row',
-    tbody: 'detail-display',
-    fields: [
-      'Cliente:client',
-      'Descripción:description',
-      'Monto:famount',
-      'Total pagado:ftpayed',
-      'Deuda restante:fttpay',
-      'Fecha:fcreated_at',
-    ],
-    checkbox: false,
-    obj: '', // pass id to find specific obj
-    comparisons: [
-      // { key: 'role', value: 'Cliente'}
-    ],
-    paragraph: true,
-    url: 'charges'
-  }
-]
 document.addEventListener("turbolinks:load", function() {
   chargeHandler(chargeForm);
   const rows = document.querySelectorAll('.charge-row');

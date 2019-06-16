@@ -10,41 +10,40 @@ Turbolinks.start();
 
 import 'popper.js';
 import 'jquery'
-import {$} from 'jquery';
 import 'bootstrap';
 import '../src/typescript/panel.users';
 import '../src/typescript/panel.charges';
-
-
+import '../src/typescript/charge.filters';
 
 /* * * * * * * * *
  * User fetching *
 * * * * * * * * */
-export const updateObjectsView = (override, id, fields, objects, name, addCheck = false, paragraph = false) => {
+export const updateObjectsView = (override, id, fields, objects, name, addCheck = false, paragraph = false, fun = null) => {
   const container = document.querySelector('#' + id);
   if (container) {
-    let rows = '';
+    if (override)
+        container.innerHTML = "";
     if (paragraph && objects.length === 1) {
+      let row = '';
       for (const field of fields) {
         const lbfl = field.split(':') // label and filed
-        rows += `<p>${lbfl[0]}: ${objects[0][lbfl[1]]}</p>`;
+        row += `<p>${lbfl[0]}: ${objects[0][lbfl[1]]}</p>`;
       }
+      container.insertAdjacentHTML('afterbegin', row);
     } else {
       for (const obj of objects) {
-        rows += `<tr class="${name}-row"> <th>${obj.id}</th>`;
+        let row = `<tr class="${name}-row" id="${name}-${obj.id}"> <th>${obj.id}</th>`;
         for (const field of fields) {
-          rows += `<td>${obj[field]}</td>`;
+          row += `<td>${obj[field]}</td>`;
         }
         if (addCheck)
-          rows += `<td><input class="${name}-check" type="checkbox" id="${name}-${obj.id}" value="${obj.id}"></td>`;
-        rows += '</tr>'
+          row += `<td><input class="${name}-check" type="checkbox" id="${name}-${obj.id}" value="${obj.id}"></td>`;
+        row += '</tr>'
+        container.insertAdjacentHTML('afterbegin', row);
+        if (fun !== null)
+          fun(obj);
       }
     }
-
-    if (override)
-      container.innerHTML = rows;
-    else
-      container.innerHTML = rows + container.innerHTML;
   } else { console.warn('Table not found!') }
 }
 
@@ -57,7 +56,9 @@ export const initializeObjectSeekers = seekers => {
       if (!isNaN(seeker.obj)) {
         url = `${seeker.url}/${seeker.obj}`
       }
-      l.addEventListener('click', (event) => {
+      
+      const e = seeker.evnet || 'click';
+      l.addEventListener(e, (event) => {
         Rails.ajax({
           type: 'GET',
           dataType: 'json',
@@ -67,12 +68,17 @@ export const initializeObjectSeekers = seekers => {
             for (const obj of data) {
               let valid = true;
               for (const comparison of seeker.comparisons) {
-                valid = valid && (obj[comparison.key] === comparison.value);
+                if (comparison.fun !== undefined)
+                  valid = valid && comparison.fun(obj, comparison.value);
+                else
+                  valid = valid && (obj[comparison.key] === comparison.value);
               }
               if (valid)
-              validObjects.push(obj);
+                validObjects.push(obj);
             }
-            updateObjectsView(true, seeker.tbody, seeker.fields, [...validObjects], seeker.name, seeker.checkbox, seeker.paragraph) 
+            if (seeker.fun === undefined)
+              seeker.fun = null;
+            updateObjectsView(true, seeker.tbody, seeker.fields, [...validObjects], seeker.name, seeker.checkbox, seeker.paragraph, seeker.fun)
           }
         });
       });

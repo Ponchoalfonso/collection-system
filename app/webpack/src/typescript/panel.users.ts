@@ -1,4 +1,5 @@
 import { initializeObjectSeekers, createAlert, closeModals } from '../../packs/application';
+import { compareDates, compareUser, extractId } from './charge.filters';
 
 const getSelectedUsers = () => {
   const users = document.querySelectorAll('.user-check');
@@ -11,6 +12,37 @@ const getSelectedUsers = () => {
 
   return selected;
 }; export default getSelectedUsers;
+
+/* * * * * * * * * * * * * * * * * * * *
+ *  Helping method for user filtering  * 
+ * * * * * * * * * * * * * * * * * * * */
+const setUserSeeker = user => {
+  document.querySelector(`#usr-${user.id}`).addEventListener('click', () => {
+    const ust = document.querySelector('#user-target span');
+    ust.innerHTML = `Usuario: ${user.name} ${user.last_name}`;
+    ust.id = "u-"+user.id;
+
+    closeModals();
+  });
+
+   const cs = [{ 
+    name: 'charge',
+    listener: `usr-${user.id}`,
+    tbody: 'charges-table',
+    fields: ['client', 'description', 'famount', 'fcreated_at'],
+    checkbox: false,
+    obj: '',
+    comparisons: [
+      { key: 'date', value: document.querySelector('input[type="date"]'), fun: compareDates },
+      { key: 'user', value: document.querySelector('#user-target span'), fun: compareUser},
+    ],
+    paragraph: false,
+    url: 'charges',
+    fun: extractId,
+  }]
+
+  initializeObjectSeekers(cs);
+}
 
 /* * * * * * * * * * * * * * * *
  * Updating users when needed  *
@@ -30,10 +62,28 @@ const us = [
     checkbox: true,
     obj: '',
     comparisons: [
-      { key: 'role', value: 'Cliente'}
+      { key: 'role', value: 'Cliente'},
     ],
     paragraph: false,
     url: 'users'
+  },
+  {
+    name: 'usr',
+    listener: 'user-target',
+    tbody: 'users-filter',
+    fields: [
+      'name',
+      'last_name',
+      'phone_number',
+    ],
+    checkbox: false,
+    obj: '',
+    comparisons: [
+      { key: 'role', value: 'Cliente'},
+    ],
+    paragraph: false,
+    url: 'users',
+    fun: setUserSeeker,
   }
 ]
 
