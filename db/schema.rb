@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2019_06_05_224721) do
 
-  create_table "charges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.decimal "amount", precision: 10
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "charges", force: :cascade do |t|
+    t.decimal "amount"
     t.text "description"
     t.boolean "payed"
     t.bigint "user_id"
@@ -22,22 +25,22 @@ ActiveRecord::Schema.define(version: 2019_06_05_224721) do
     t.index ["user_id"], name: "index_charges_on_user_id"
   end
 
-  create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.decimal "amount", precision: 10
+  create_table "payments", force: :cascade do |t|
+    t.decimal "amount"
     t.bigint "charge_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["charge_id"], name: "index_payments_on_charge_id"
   end
 
-  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "roles", force: :cascade do |t|
     t.string "name"
     t.integer "permission_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "last_name"
     t.string "second_last_name"
