@@ -1,0 +1,33 @@
+<div class="modal" id="new-payment" tabindex="-1" role="dialog" aria-labelledby="new-paymentLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content payments">
+      <div class="section-title">
+        <div class="wrapper">
+          <h3>Nuevo pago a cargo</h3>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="wrapper">
+          <%= form_with(model: @payment, html: {:id => "payment_form"}) do |f| %>
+
+            <div class="field">
+              <%= f.label 'Monto' %><br />
+              <%= f.number_field :amount, autofocus: true, autocomplete: "text", class: 'form-control' %>
+            </div>
+
+            <div class="field">
+              <%= f.label 'ID de cargo' %><br />
+              <%= f.number_field :charge_id, autofocus: true, class: 'form-control', placeholder: 'Readonly input here…', readonly: true, id: "selected-charge" %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "Pagar", class: "btn btn-other" %>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

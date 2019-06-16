@@ -2,7 +2,9 @@
   <div class="details container">
     <div class="sub-content">
       <h3>Detalle de cargo</h3>
-      <button class="btn btn-other">Pagar</button>
+      <% if current_user.role.permission_level > 0 %>
+      <button id="to-new-payment" type="button" class="btn btn-other" data-toggle="modal" data-target="">Pagar</button>
+      <% end %>
     </div>
     <div class="info" id="detail-display">
       <p>Selecciona un cargo para ver sus detalles.</p>
@@ -21,12 +23,7 @@
             <th>Fecha</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th>some id</th>
-            <td>$500</td>
-            <td>hoy</td>
-          </tr>
+        <tbody id="payment-table">
         </tbody>
       </table>
     </div>

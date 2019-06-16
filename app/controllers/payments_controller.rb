@@ -17,9 +17,10 @@ class PaymentsController < ApplicationController
 
   def create
     @payment = Payment.new(payment_params)
-
     respond_to do |format|
       if @payment.save
+        @charge = @payment.charge
+        @charge.update(payed: @charge.set_payed)
         format.json { render :show, status: :created, location: @payment }
       else
         format.json { render json: @payment.errors, status: :unprocessable_entity }

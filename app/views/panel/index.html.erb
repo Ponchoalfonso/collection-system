@@ -8,19 +8,19 @@
       <% end %>
     </div>
   </div>
+  <% if current_user.role.permission_level > 1 %>
   <div class="options">
     <button type="button" class="btn btn-other" data-toggle="modal" data-target="#new-user">Agregar usuario</button>
   </div>
+  <% end %>
   <div class="panel-content d-flex">
-    <% if current_user.role.permission_level > 1 %>
-    <% elsif current_user.role.permission_level > 0 %>
-    <% else %>
-    
-    <% end %>
     <%= render './panel/charges/index', charges: @charges%>
     <%= render './panel/charges/show'%>
   </div>
 </section>
 <%= render './panel/users/filter' %>
+<% if current_user.role.permission_level > 0 %>
 <%= render './panel/users/new' %>
 <%= render './panel/charges/new' %>
+<%= render './panel/payments/new' %>
+<% end %>

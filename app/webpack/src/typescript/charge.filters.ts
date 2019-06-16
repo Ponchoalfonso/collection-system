@@ -11,7 +11,11 @@ export const compareDates = (charge, date) => {
   return (chdate.join('-') === date);
 }
 
-export const compareUser = (charge, userId) => charge.user.id === +userId.id.split('-')[1];
+export const compareUser = (charge, userId) => {
+  if (userId.id === '')
+    return true;
+  return charge.user.id === +userId.id.split('-')[1]
+};
 
 export const extractId = charge => { chargeDetail(charge.id); }
 
@@ -42,7 +46,7 @@ document.addEventListener("turbolinks:load", function() {
       fun: extractId,
     },
     {
-      event: 'input',
+      event: 'click',
       name: 'charge',
       listener: 'reset-target',
       tbody: 'charges-table',

@@ -1,6 +1,6 @@
 import getSelectedUsers from './panel.users';
 import Rails from 'rails-ujs';
-import { updateObjectsView, createAlert, closeModals } from '../../packs/application';
+import { updateObjectsView, createAlert, closeModals, initializeObjectSeekers } from '../../packs/application';
 
 /* * * * * * * * *
 * Charge create  *
@@ -57,7 +57,26 @@ const chargeHandler = (form) => {
 export const chargeDetail = (id) => {
   const row = document.querySelector(`#charge-${id}`);
   if (row) {
+    const ps = [{  // payment seeker
+      event: 'click',
+      name: 'payment',
+      listener: `charge-${id}`,
+      tbody: 'payment-table',
+      fields: ['famount', 'fcreated_at'],
+      checkbox: false,
+      obj: '',
+      comparisons: [{ key: 'charge_id', value: +id}],
+      paragraph: false,
+      url: 'payments',
+    }];
+    initializeObjectSeekers(ps);
     row.addEventListener('click', () => {
+      const f = document.querySelector('#selected-charge');
+      const npb  = document.querySelector('#to-new-payment'); // New payment button
+      if (f && npb) {
+        f.value = id;
+        npb.dataset.target = '#new-payment';
+      }
       Rails.ajax({
         type: 'GET',
         dataType: 'json',

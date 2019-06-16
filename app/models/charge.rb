@@ -20,5 +20,6 @@ class Charge < ApplicationRecord
     if self.amount != nil
       self.payed = self.total_payed >= self.amount
     end
+    return self.payed
   end
 end

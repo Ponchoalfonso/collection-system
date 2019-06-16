@@ -3,14 +3,15 @@ class PanelController < ApplicationController
   before_action :set_data
 
   def index
+    @payment = Payment.new
   end
 
   private
     def set_data
       if current_user.role.permission_level > 0
         @charges = Charge.order('created_at DESC')
-        @customers = User.where(role_id: 1)
       else
+        @charges = current_user.charges.order('created_at DESC')
       end
     end
 end

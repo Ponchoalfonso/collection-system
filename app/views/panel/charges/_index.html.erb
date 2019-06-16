@@ -1,7 +1,9 @@
 <div class="charges p-2 flex-md-grow-1 vflex">
   <div class="sub-content">
     <h3>Cargos</h3>
+    <% if current_user.role.permission_level > 0 %>
     <button id="get-users-charge" type="button" class="btn btn-other" data-toggle="modal" data-target="#new-charge">Nuevo</button>
+    <% end %>
     <button id="user-target" type="button" class="btn btn-other dropdown-toggle" data-toggle="modal" data-target="#filter-users">
       <span id="">Filtrar usuario</span>
     </button>

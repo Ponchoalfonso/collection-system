@@ -14,6 +14,7 @@ import 'bootstrap';
 import '../src/typescript/panel.users';
 import '../src/typescript/panel.charges';
 import '../src/typescript/charge.filters';
+import '../src/typescript/panel.payments';
 
 /* * * * * * * * *
  * User fetching *
