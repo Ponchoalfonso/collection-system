@@ -2,7 +2,7 @@ class ChargesController < ApplicationController
   before_action :set_charge, only: [:show, :edit, :update, :destroy]
 
   def index
-    @charges = Charge.all
+    @charges = Charge.all.order('created_at DESC')
   end
 
   def show
@@ -49,7 +49,13 @@ class ChargesController < ApplicationController
       @charge = Charge.find(params[:id])
     end
 
+    
     def charge_params
-      params.require(:charge).permit(:amount, :description, :payed, :user_id)
+      json = JSON.parse(params.require(:charge))
+      other = Hash.new
+      other[:amount] = json["amount"]
+      other[:description] = json["description"]
+      other[:user_id] = json["user_id"]
+      return other
     end
 end

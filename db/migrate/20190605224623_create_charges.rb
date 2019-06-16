@@ -4,6 +4,7 @@ class CreateCharges < ActiveRecord::Migration[5.2]
       t.decimal :amount
       t.text :description
       t.boolean :payed
+      t.references :user
 
       t.timestamps
     end

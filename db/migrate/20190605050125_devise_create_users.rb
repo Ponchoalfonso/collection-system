@@ -6,11 +6,11 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       ## User personal data
       t.string :name
       t.string :last_name
-      t.string :secont_last_name
+      t.string :second_last_name
       t.references :role
 
       ## Database authenticatable
-      t.integer :phone_number,              null: false
+      t.bigint :phone_number,              null: false
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable

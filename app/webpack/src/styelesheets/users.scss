@@ -1,0 +1,21 @@
+$contrast: #e76278;
+
+.form-container {
+  text-align: center;
+}
+
+.form-container .wrapper {
+  text-align: left;
+}
+
+.form-container form input, .form-container form label {
+ font-size: 1.4em; 
+}
+
+.form-container form .field input {
+  width: 300px;
+  background-color: #e7627800;
+  border-color: #ffffff36;
+  color: white;
+}
+

@@ -1,0 +1,16 @@
+.site-welcome {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.site-welcome .wrapper {
+  margin-top: 20%;
+}
+
+.site-welcome h2 {
+  font-size: 2em;
+}
+
+.site-welcome h2, .site-welcome p {
+  text-align: right;
+}

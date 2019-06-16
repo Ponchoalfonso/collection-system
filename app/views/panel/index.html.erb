@@ -1,0 +1,25 @@
+<section class="panel">
+  <div class="section-title">
+    <div class="wrapper">
+      <% if current_user.role.permission_level > 0 %>
+      <h2>Panel de administración</h2>
+      <% else %>
+      <h2>Resumen de cargos</h2>
+      <% end %>
+    </div>
+  </div>
+  <div class="options">
+    <button type="button" class="btn btn-other" data-toggle="modal" data-target="#new-user">Agregar usuario</button>
+  </div>
+  <div class="panel-content d-flex">
+    <% if current_user.role.permission_level > 1 %>
+    <% elsif current_user.role.permission_level > 0 %>
+    <% else %>
+    
+    <% end %>
+    <%= render './panel/charges/index', charges: @charges%>
+    <%= render './panel/charges/show'%>
+  </div>
+</section>
+<%= render './panel/users/new' %>
+<%= render './panel/charges/new' %>

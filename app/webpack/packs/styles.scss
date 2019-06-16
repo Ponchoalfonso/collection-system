@@ -1,5 +1,93 @@
+@import url('https://fonts.googleapis.com/css?family=Oxygen&display=swap');
 @import '~bootstrap/scss/bootstrap';
+@import '../src/styelesheets/site';
+@import '../src/styelesheets/users';
+@import '../src/styelesheets/panel';
+@import '../src/styelesheets/panel.users';
+@import '../src/styelesheets/panel.charges';
 
-h1 {
-  color: red;
+// Global
+* {
+  font-family: 'Oxygen', sans-serif;
+}
+
+html, body {
+  display: flex;
+  flex-flow: column;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  max-height: 100vh;
+}
+
+body {
+  background-color: #1c1d26;
+  color: white;
+}
+
+section {
+  display: flex;
+  flex-flow: column;
+  flex: 1 1 auto;
+}
+
+.wrapper {
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
+}
+
+// Alerts
+.alert {
+  margin: 1em;
+}
+
+// Header
+header {
+  background-color: #272833;
+}
+
+header h1 {
+  margin: 4px 1em;
+}
+
+header .navbar-nav > li {
+  margin-left: 30px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.section-title .wrapper {
+  border-bottom: solid 3px #e44c65;
+}
+
+.section-title h2, .section-title h3 {
+  margin: 2em 2em 1em 2em;
+  font-weight: 300;
+}
+
+// My buttons
+.btn-other {
+  background-color: #e44c65;
+  padding: 6px 30px;
+  border: none;
+  color: white;
+}
+
+.btn-other:hover {
+  background-color: #e76278;
+  border: none;
+  color: white;
+}
+
+.btn-other:active {
+  background-color: #e13652;
+  border: none;
+  color: white;
 }

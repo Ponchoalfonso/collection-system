@@ -1,4 +1,9 @@
-json.extract! charge, :id, :amount, :description, :created_at, :updated_at
+json.extract! charge, :id, :amount, :description, :payed, :created_at, :updated_at
+json.fcreated_at charge.created_at.strftime('%FT%T')
+json.famount number_to_currency charge.amount
+json.ftpayed number_to_currency charge.total_payed
+json.fttpay number_to_currency charge.total_to_pay
+json.client "#{charge.user.name} #{charge.user.last_name}"
 json.user do
   json.(charge.user, :id, :name, :last_name, :second_last_name)
 end

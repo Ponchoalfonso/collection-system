@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'panel/charges'
+  get 'panel/users'
+  get 'panel/pay'
   # Root route
   root to: 'site#home'
 
@@ -11,7 +14,18 @@ Rails.application.routes.draw do
 
   # Payments routes
   resources :payments
-  
+
+  # Users routes
+
+
+defaults format: :json do
+  get 'users', to: 'users#index'
+  get 'user/:id', to: 'users#show'
+end
+
+  # Panel routes
+  get 'panel', to: 'panel#index', as: 'panel'
+
   # Devise routes
   devise_for :users , controllers: {
     sessions: 'users/sessions',
