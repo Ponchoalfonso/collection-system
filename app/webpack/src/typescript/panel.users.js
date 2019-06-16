@@ -3,11 +3,12 @@ import { compareDates, compareUser, extractId } from './charge.filters';
 
 const getSelectedUsers = () => {
   const users = document.querySelectorAll('.user-check');
+  users[0]
   const selected = [];
   for (const user of users) {
     if (user.checked)
       selected.push(user.value);
-      user.checked = false;
+    user.checked = false;
   }
 
   return selected;
